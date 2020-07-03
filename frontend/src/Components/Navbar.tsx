@@ -1,15 +1,18 @@
+// React Imports
 import React from 'react'
 
+// Semantic UI Imports
 import { Menu, Segment } from 'semantic-ui-react'
 
+// Style Imports
 import '../Styles/navbar.css'
 
 
 export default function Navbar() {
     return (
-            <Menu text-align="center" inverted borderless style={{borderRadius: '0', backgroundColor: '#1f2022', marginBottom: "3rem"}}>
+            <Menu fluid text-align="center" inverted borderless style={{borderRadius: '0', backgroundColor: '#1f2022', marginBottom: '2.5rem'}}>
                 <Menu.Item  className="navBrand" as='h3' name="battls" font-weight="700"/>
-                <Menu.Menu position="right">
+                <Menu.Menu position="right" fluid>
                     <Menu.Item as='a' name='Home'/>
                     <Menu.Item as='a' name='Account'/>
                 </Menu.Menu>

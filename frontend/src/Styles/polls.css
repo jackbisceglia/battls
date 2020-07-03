@@ -1,5 +1,5 @@
 .pollCntr {
-    width: 90%;
+    width: 75%;
     display: inline-block;
     justify-content: space-evenly;
     align-items: space-evenly;
@@ -10,3 +10,4 @@
     max-width: 45%;
     margin: 0 .5rem;
 }
+

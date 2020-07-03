@@ -1,20 +1,20 @@
+// React Imports
 import React from 'react'
 
+// Component Imports
 import PollOption from './PollOption'
+
+// Semantic Imports
 import { Card, Button, Image, Progress} from 'semantic-ui-react'
 
+// Style Imports
 import '../Styles/polls.css'
   
-const namesTooLong = (name1: string, name2: string ) => {
-
-}
-
-// Passed Props
 interface Props {
     pollOptions: pollOptions
 }
 
-// Define pollOptions Object
+// pollOptions Prop Interface
 interface pollOptions {
     optionOne: string,
     optionTwo: string
@@ -23,16 +23,17 @@ interface pollOptions {
 const Poll: React.FC<Props> = ({
     pollOptions
 }) => {
+    // Deconstruct pollOptions
     let optionOne: string = pollOptions.optionOne;
     let optionTwo: string = pollOptions.optionTwo;
 
     return (
-        <Card style={{width: "28%"}} center>
+        <Card centered fluid>
             <Card.Content >
                 <Card.Header>{optionOne} vs. {optionTwo}</Card.Header>
                 <Card.Meta>Jack Bisceglia</Card.Meta>
             </Card.Content>
-            <Card.Content>
+            <Card.Content textAlign="center">
                 <div className="pollCntr">
                     <PollOption optionName={optionOne} percent={69} isWinning={true} />
                     <PollOption optionName={optionTwo} percent={20} isWinning={false}/>

@@ -1,10 +1,12 @@
+// React Imports
 import React from 'react'
 
+// Semantic UI Imports
 import { Progress} from 'semantic-ui-react'
 
+// Style Imports
 import '../Styles/poll.css'
 
-// Props to take in
 interface Props {
     optionName: string
     percent: number

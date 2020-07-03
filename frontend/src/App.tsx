@@ -1,3 +1,4 @@
+// React Imports
 import React, { useState } from 'react';
 
 // Semantic-UI Imports
@@ -5,12 +6,16 @@ import { Grid } from 'semantic-ui-react'
 
 // Component Imports
 import Navbar from './Components/Navbar'
-import Poll from './Components/Poll'
+import Feed from './Components/Feed'
+import MakePoll from './Components/MakePoll'
+
+// Interface Imports
+import { PollData } from './Components/Feed'
 
 // Style Imports
 
-function App() {
-  const [polls, setPolls] = useState([
+const App: React.FC = () => {
+  const [polls, setPolls]  = useState<Array<PollData>>([
     {
       optionOne: "Bulls",
       optionTwo: "Celtics",
@@ -33,14 +38,13 @@ function App() {
   <>
   <Navbar />
   <div className="app">
-    <Grid fluid textAlign="center" >
-      {                
-        polls.map(curr => (
-          <Grid.Row textAlign="center" >
-            <Poll pollOptions={curr} />
-          </Grid.Row>
-        ))
-      }
+    <Grid fluid centered stackable>
+    <Grid.Column float="left" computer={1} mobile={1}>
+        <MakePoll placeholder={10}/>
+      </Grid.Column>
+      <Grid.Column computer={5} mobile={12}>
+        <Feed pollList={polls}/>
+      </Grid.Column>
     </Grid>
   </div>
   </>
