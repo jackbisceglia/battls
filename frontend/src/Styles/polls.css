@@ -1,0 +1,12 @@
+.pollCntr {
+    width: 90%;
+    display: inline-block;
+    justify-content: space-evenly;
+    align-items: space-evenly;
+}
+
+.vote-btn {
+    min-width: 35%;
+    max-width: 45%;
+    margin: 0 .5rem;
+}

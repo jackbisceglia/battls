@@ -1,0 +1,10 @@
+.pollCntr {
+    width: 90%;
+    display: inline-block;
+    justify-content: space-evenly;
+    align-items: space-evenly;
+}
+
+.customCard {
+    margin-top: 5rem;
+}
