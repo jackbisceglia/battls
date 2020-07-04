@@ -10,7 +10,7 @@ import Feed from './Components/Feed'
 import MakePoll from './Components/MakePoll'
 
 // Interface Imports
-import { PollData } from './Components/Feed'
+import { PollData } from './Interfaces/PollData'
 
 // Style Imports
 
@@ -19,18 +19,30 @@ const App: React.FC = () => {
     {
       optionOne: "Bulls",
       optionTwo: "Celtics",
+      posterName: "Jack Bisceglia",
+      optionOneVotes: 27,
+      optionTwoVotes: 90
     },
     {
       optionOne: "String Cheese",
       optionTwo: "Melted Cheese",
+      posterName: "Gillian Bisceglia",
+      optionOneVotes: 9,
+      optionTwoVotes: 2
     },
     {
       optionOne: "Sausage",
       optionTwo: "Hot Dog",
+      posterName: "Tom Brady",
+      optionOneVotes: 47,
+      optionTwoVotes: 42
     },
     {
       optionOne: "Golden Retriever",
       optionTwo: "Black Lab",
+      posterName: "Harry Potter",
+      optionOneVotes: 71,
+      optionTwoVotes: 43
     },
   ])
 

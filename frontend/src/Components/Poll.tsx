@@ -3,6 +3,7 @@ import React from 'react'
 
 // Component Imports
 import PollOption from './PollOption'
+import { PollData } from '../Interfaces/PollData'
 
 // Semantic Imports
 import { Card, Button, Image, Progress} from 'semantic-ui-react'
@@ -11,41 +12,46 @@ import { Card, Button, Image, Progress} from 'semantic-ui-react'
 import '../Styles/polls.css'
   
 interface Props {
-    pollOptions: pollOptions
+    PollData: PollData
 }
 
-// pollOptions Prop Interface
-interface pollOptions {
-    optionOne: string,
-    optionTwo: string
-} 
+const getPercent = (votes: number, totalVotes: number) => {
+    return (votes / totalVotes) * 100
+
+}
 
 const Poll: React.FC<Props> = ({
-    pollOptions
+    PollData
 }) => {
     // Deconstruct pollOptions
-    let optionOne: string = pollOptions.optionOne;
-    let optionTwo: string = pollOptions.optionTwo;
+    let optionOne: string = PollData.optionOne;
+    let optionTwo: string = PollData.optionTwo;
+    let poster: string = PollData.posterName;
+
+    const totalVotes: number = PollData.optionOneVotes + PollData.optionTwoVotes;
 
     return (
         <Card centered fluid>
             <Card.Content >
                 <Card.Header>{optionOne} vs. {optionTwo}</Card.Header>
-                <Card.Meta>Jack Bisceglia</Card.Meta>
+                <Card.Meta>{poster}</Card.Meta>
             </Card.Content>
             <Card.Content textAlign="center">
                 <div className="pollCntr">
-                    <PollOption optionName={optionOne} percent={69} isWinning={true} />
-                    <PollOption optionName={optionTwo} percent={20} isWinning={false}/>
+                    <PollOption optionName={optionOne} percent={getPercent(PollData.optionOneVotes, totalVotes)} isWinning={getPercent(PollData.optionOneVotes, totalVotes) >= 50 ? true : false} />
+                    <PollOption optionName={optionTwo} percent={getPercent(PollData.optionTwoVotes, totalVotes)} isWinning={getPercent(PollData.optionTwoVotes, totalVotes) >= 50 ? true : false}/>
                 </div>
             </Card.Content>
             <Card.Content textAlign="center" extra>
-                <Button size="mini" className="vote-btn" basic color='blue'>
-                    {optionOne}
-                </Button>
-                <Button size="mini" className="vote-btn" basic color='blue'>
-                    {optionTwo}
-                </Button>
+                <Button.Group style={{width: '90%', margin: '.25rem'}} size="small">
+                    <Button size="mini" className="vote-btn" color='blue'>
+                        {optionOne}
+                    </Button>
+                    <Button.Or />
+                    <Button size="mini" className="vote-btn" color='blue'>
+                        {optionTwo}
+                    </Button>
+                </Button.Group>
             </Card.Content>
         </Card>
 

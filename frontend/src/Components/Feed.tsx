@@ -7,15 +7,13 @@ import { Grid } from 'semantic-ui-react'
 // Component Imports
 import Poll from './Poll'
 
+// Interface Imports
+import { PollData } from '../Interfaces/PollData'
+
+
 interface Props {
     pollList: PollData[]
 }
-
-export interface PollData {
-    optionOne: string,
-    optionTwo: string,
-}
-
 
 const Feed: React.FC<Props> = ({
     pollList
@@ -26,7 +24,7 @@ const Feed: React.FC<Props> = ({
         pollList.map(curr => (
             <Grid.Row centered stretched style={{marginBottom: '2.5rem'}} >
                 <Grid.Column >
-                    <Poll pollOptions={curr}/>
+                    <Poll PollData={curr}/>
                 </Grid.Column>
             </Grid.Row>
         ))

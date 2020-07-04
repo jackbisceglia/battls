@@ -6,8 +6,7 @@
 }
 
 .vote-btn {
-    min-width: 35%;
-    max-width: 45%;
+    width: 35%;
     margin: 0 .5rem;
 }
 

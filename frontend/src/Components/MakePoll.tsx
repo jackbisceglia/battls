@@ -13,7 +13,7 @@ interface Props {
 }
 
 const MakePoll: React.FC<Props> = () => {
-    const [makePostClicked, setMakePostClicked] = useState<boolean>(true);
+    const [makePostClicked, setMakePostClicked] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     return (
