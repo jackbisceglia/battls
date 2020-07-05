@@ -3,3 +3,7 @@
 * {
     font-family: 'Rubik', sans-serif;
 }
+
+.app, body, #root {
+    background-color: rgb(250, 250, 250);
+}

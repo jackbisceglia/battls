@@ -43,12 +43,12 @@ const Poll: React.FC<Props> = ({
                 </div>
             </Card.Content>
             <Card.Content textAlign="center" extra>
-                <Button.Group style={{width: '90%', margin: '.25rem'}} size="small">
-                    <Button size="mini" className="vote-btn" color='blue'>
+                <Button.Group style={{width: '80%', margin: '.25rem'}} size="small">
+                    <Button size="mini" className="vote-btn" color='blue' style={{fontSize: '.9rem'}}>
                         {optionOne}
                     </Button>
                     <Button.Or />
-                    <Button size="mini" className="vote-btn" color='blue'>
+                    <Button size="mini" className="vote-btn" color='blue' style={{fontSize: '.9rem'}}>
                         {optionTwo}
                     </Button>
                 </Button.Group>

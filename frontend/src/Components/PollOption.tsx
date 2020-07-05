@@ -5,7 +5,6 @@ import React from 'react'
 import { Progress} from 'semantic-ui-react'
 
 // Style Imports
-import '../Styles/poll.css'
 
 interface Props {
     optionName: string
