@@ -14,37 +14,19 @@ import { PollData } from './Interfaces/PollData'
 
 // Style Imports
 
+// Redux Hooks
+import { useSelector, useDispatch} from 'react-redux'
+
+// Type Imports
+import { RootState } from './Reducers'
+
+// Action Imports
+import { increment, decrement } from './Actions/Counter'
+
 const App: React.FC = () => {
-  const [polls, setPolls]  = useState<Array<PollData>>([
-    {
-      optionOne: "Bulls",
-      optionTwo: "Celtics",
-      posterName: "Jack Bisceglia",
-      optionOneVotes: 27,
-      optionTwoVotes: 90
-    },
-    {
-      optionOne: "String Cheese",
-      optionTwo: "Melted Cheese",
-      posterName: "Gillian Bisceglia",
-      optionOneVotes: 9,
-      optionTwoVotes: 2
-    },
-    {
-      optionOne: "Sausage",
-      optionTwo: "Hot Dog",
-      posterName: "Tom Brady",
-      optionOneVotes: 47,
-      optionTwoVotes: 42
-    },
-    {
-      optionOne: "Golden Retriever",
-      optionTwo: "Black Lab",
-      posterName: "Harry Potter",
-      optionOneVotes: 71,
-      optionTwoVotes: 43
-    },
-  ])
+  const polls = useSelector((state: RootState) => state.posts);
+  const dispatch = useDispatch();
+
 
   return (
   <>
