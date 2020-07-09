@@ -21,12 +21,11 @@ import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from './Reducers'
 
 // Action Imports
-import { increment, decrement } from './Actions/Counter'
+import { addPost } from './Slices/Posts'
 
 const App: React.FC = () => {
   const polls = useSelector((state: RootState) => state.posts);
-  const dispatch = useDispatch();
-
+  const postDispatch = { addPost };
 
   return (
   <>

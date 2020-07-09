@@ -5,11 +5,13 @@ import './Styles/main.css'
 import 'semantic-ui-css/semantic.min.css'
 
 // Store
-import {createStore} from 'redux';
+import { configureStore } from "@reduxjs/toolkit";
 import {Provider} from 'react-redux';
-import { rootReducer } from './Reducers'
+import rootReducer from './Reducers'
 
-const store = createStore(rootReducer);
+const store = configureStore({
+  reducer: rootReducer
+});
 
 
 ReactDOM.render(

@@ -11,8 +11,6 @@ import Poll from './Poll'
 import { PollData } from '../Interfaces/PollData'
 
 // Redux Imports
-import { useSelector, useDispatch} from 'react-redux'
-import { RootState } from '../Reducers'
 
 
 interface Props {
@@ -22,8 +20,6 @@ interface Props {
 const Feed: React.FC<Props> = ({
     pollList
 }) => {
-    const dispatch = useDispatch();
-
     return (
         <>
         {

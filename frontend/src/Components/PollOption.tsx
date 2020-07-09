@@ -2,7 +2,7 @@
 import React from 'react'
 
 // Semantic UI Imports
-import { Progress} from 'semantic-ui-react'
+import { Progress } from 'semantic-ui-react'
 
 // Style Imports
 
