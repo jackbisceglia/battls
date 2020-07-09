@@ -1,4 +1,4 @@
-import posts from './posts'
+import posts from './Slices/Posts'
 import { combineReducers } from 'redux';
 
 

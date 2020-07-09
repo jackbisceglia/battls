@@ -4,6 +4,11 @@ import React, { useState } from 'react'
 import { Grid, Button, Modal, Form, Select} from 'semantic-ui-react'
 
 // Redux Imports
+import { useSelector, useDispatch} from 'react-redux'
+import { RootState } from '../Reducers'
+import { addPost } from '../Reducers/Slices/Posts'
+
+
 // Interface Imports
 import { PollData } from '../Interfaces/PollData'
 
@@ -13,8 +18,41 @@ interface Props {
 }
 
 const MakePoll: React.FC<Props> = () => {
+    const polls = useSelector((state: RootState) => state.posts);
+    const dispatch = useDispatch();
+
+    const postDefault = {
+        id : polls.length + 1,
+        optionOne: '',
+        optionTwo: '',
+        posterName: 'Jack Bisceglia',
+        optionOneVotes: 0,
+        optionTwoVotes: 0,
+    }
+
     const [makePostClicked, setMakePostClicked] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [newPost, setNewPost] = useState<PollData>(postDefault);
+    // ALREADY VOTED STATE => TAKE FROM SERVER AND POTENTIALLY STATE
+
+    const [createError, setCreateError] = useState<string>('');
+
+    const reset = () => {
+        setCreateError('');
+        setMakePostClicked(false);
+        setNewPost(postDefault);
+    }
+    
+    const submitPost = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (newPost.optionOne === '' || newPost.optionTwo === ''){
+            setCreateError("Both Option Fields Must be filled out")
+        }
+        else {
+            dispatch(addPost(newPost));
+            reset();
+        }
+    }
 
     return (
         <>
@@ -30,12 +68,6 @@ const MakePoll: React.FC<Props> = () => {
                 <Button.Content visible>+</Button.Content>
                 <Button.Content hidden>Post</Button.Content>
             </Button>
-            {/* <button onClick={(event) => {
-                event.preventDefault();
-                console.log(polls)
-            }}>
-                See Polls List
-            </button> */}
         </Grid.Row>
         <Modal 
             open={makePostClicked}
@@ -56,9 +88,13 @@ const MakePoll: React.FC<Props> = () => {
             </Modal.Header>
             <Modal.Content>
         
-            <Form loading={isLoading} >
-                <Form.Input width={14} label='Option 1' placeholder='Enter a Contestant' />
-                <Form.Input width={14} label='Option 2' placeholder='Enter a Contestant' />
+            <Form loading={isLoading} onSubmit={(event) => submitPost(event)}>
+                <Form.Input width={14} label='Option 1' placeholder='Enter a Contestant' onChange={(event) => {
+                    setNewPost({...newPost, optionOne: event.target.value})
+                }}/>
+                <Form.Input width={14} label='Option 2' placeholder='Enter a Contestant' onChange={(event) => {
+                    setNewPost({...newPost, optionTwo: event.target.value})
+                }}/>
                 <Button style={{margin: ".5rem 0"}}>Start a Battle</Button>
             </Form>
             </Modal.Content>

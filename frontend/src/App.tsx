@@ -14,14 +14,10 @@ import { PollData } from './Interfaces/PollData'
 
 // Style Imports
 
-// Redux Hooks
+// Redux Import
 import { useSelector, useDispatch} from 'react-redux'
-
-// Type Imports
 import { RootState } from './Reducers'
-
-// Action Imports
-import { addPost } from './Slices/Posts'
+import { addPost } from './Reducers/Slices/Posts'
 
 const App: React.FC = () => {
   const polls = useSelector((state: RootState) => state.posts);

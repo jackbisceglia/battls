@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { PollData } from '../Interfaces/PollData'
-import { RootState } from '../Reducers'; 
+import { PollData } from '../../Interfaces/PollData'
+import { RootState } from '..'; 
 
 const defaultPosts = [
     {
@@ -37,6 +37,11 @@ const defaultPosts = [
       }
 ]
 
+interface vote {
+  isOptionOne: boolean,
+  id: number
+}
+
 const initialState: PollData[] = defaultPosts;
 
 const postsSlice = createSlice({
@@ -44,16 +49,23 @@ const postsSlice = createSlice({
   initialState: initialState,
   reducers: {
     addPost(state, action: PayloadAction<PollData>) {
-        state.push(action.payload);
+        return[action.payload, ...state];
     },
     deletePost(state, action: PayloadAction<number>) {
         return state.filter(curr => curr.id !== action.payload);
     },
+    addVote(state, action: PayloadAction<vote>){
+      state.forEach(curr => {
+        if (curr.id == action.payload.id){
+          action.payload.isOptionOne ? curr.optionOneVotes += 1 : curr.optionTwoVotes += 1
+        }
+      })
+    }
     
   }
 })
 
-export const { addPost } = postsSlice.actions
+export const { addPost, addVote } = postsSlice.actions
 
 export default postsSlice.reducer
 
