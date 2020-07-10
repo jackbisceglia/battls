@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import { v4 as uuidv4 } from 'uuid'
+
 // Semantic UI Imports
 import { Grid, Button, Modal, Form, Select} from 'semantic-ui-react'
 
@@ -22,19 +24,21 @@ const MakePoll: React.FC<Props> = () => {
     const dispatch = useDispatch();
 
     const postDefault = {
-        id : polls.length + 1,
+        id : uuidv4(),
         optionOne: '',
         optionTwo: '',
         posterName: 'Jack Bisceglia',
         optionOneVotes: 0,
         optionTwoVotes: 0,
+        userVoted: {
+            voted: false,
+            isOptionOne: false
+        }
     }
 
     const [makePostClicked, setMakePostClicked] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [newPost, setNewPost] = useState<PollData>(postDefault);
-    // ALREADY VOTED STATE => TAKE FROM SERVER AND POTENTIALLY STATE
-
     const [createError, setCreateError] = useState<string>('');
 
     const reset = () => {
@@ -46,13 +50,21 @@ const MakePoll: React.FC<Props> = () => {
     const submitPost = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (newPost.optionOne === '' || newPost.optionTwo === ''){
-            setCreateError("Both Option Fields Must be filled out")
+            handleAlert("Both Option Fields Must be filled out");
         }
         else {
             dispatch(addPost(newPost));
             reset();
         }
     }
+
+    const handleAlert = (message: string) => {
+        setCreateError(message)
+    
+        setTimeout(() => {
+            setCreateError('');
+        }, 1000);
+      }
 
     return (
         <>
@@ -71,6 +83,10 @@ const MakePoll: React.FC<Props> = () => {
         </Grid.Row>
         <Modal 
             open={makePostClicked}
+            onClose={() => {
+                setMakePostClicked(false);
+                reset()
+            }}
             size="mini"
             dimmer={true}
         >
@@ -99,9 +115,17 @@ const MakePoll: React.FC<Props> = () => {
             </Form>
             </Modal.Content>
             <Modal.Description>
-                <p style={{paddingBottom: "1rem", paddingLeft: "1rem", paddingRight: "1rem"}}>
-                    Enter Options One and Two, and let your network vote to see who would win the battle!
-                </p>
+
+                {createError === ''
+                    ?
+                        <p style={{paddingBottom: "1rem", paddingLeft: "1rem", paddingRight: "1rem"}}>
+                            Enter Options One and Two, and let your network vote to see who would win the battle!
+                        </p>
+                    :
+                        <p style={{paddingBottom: "1rem", paddingLeft: "1rem", paddingRight: "1rem", color: 'red', fontWeight: "bold"}}>
+                            {createError}
+                        </p>
+                }
             </Modal.Description>
         </Modal>
         </>

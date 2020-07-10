@@ -10,6 +10,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "@types/redux": "^3.6.0",
+    "@types/uuid": "^8.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
@@ -18,7 +19,8 @@
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "uuid": "^8.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
