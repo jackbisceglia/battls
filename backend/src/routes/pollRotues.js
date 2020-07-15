@@ -1,12 +1,32 @@
+const express = require( "express" );
+const router = express.Router();
+const pool = require('../db');
+
 // ----CREATE----
 // Create Post
-    // Add to Posts DB w/
-        // User Id
-        // Post Id
-        // Option Names
-        // Number of Votes Each
-        // Total of Votes
+router.post('/makepost', async (req, res) => {
+    try {
+        const {user_id, poll_id, option_one, option_two} = req.body;
 
+        const userExists = await pool.query(
+            "SELECT * FROM users WHERE usr_id = $1",
+                [user_id]
+        );
+        if (userExists.rows.length == 1) {
+            const newPoll = await pool.query(
+                "INSERT INTO polls (usr_id, poll_id, option_one, option_two) VALUES($1, $2, $3, $4)",
+                    [user_id, poll_id, option_one, option_two]
+            );
+            res.json({success : true})
+        }
+        else {
+            res.json({success : false})
+        }
+    }
+    catch (error) {
+      console.error(error.message)
+    }
+})
 // ----READ----
 // Get Feed
     // Query All Posts in DB by creation number and return recent posts from ((numProvided * 10) - 20)
@@ -36,3 +56,5 @@
 // ----Delete----
 // Delete Post
     // DELETE post where postId == postId provided
+
+module.exports = router;
