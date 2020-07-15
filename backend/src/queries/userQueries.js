@@ -8,7 +8,16 @@ const userExists = async (user_id) => {
     );
     numUsers = userMatches.rows.length
 
-    return numUsers == 1
+    return numUsers == 1;
 }
 
-module.exports = { userExists };
+const getUserName = async (user_id) => {
+    const username = await pool.query(
+        "SELECT username FROM users WHERE usr_id = $1",
+            [user_id]
+    );
+    return username.rows[0].username;
+}
+
+
+module.exports = { userExists, getUserName };
