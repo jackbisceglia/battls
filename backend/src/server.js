@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // ROUTE IMPORTS
-const pollRoutes = require('./routes/pollRotues');
+const pollRoutes = require('./routes/pollRoutes');
 
 
 // ROUTER USE

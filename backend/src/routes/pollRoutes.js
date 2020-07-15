@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../db');
 const userQueries = require('../queries/userQueries');
 const pollQueries = require('../queries/pollQueries');
+const { response } = require("express");
 
 // ----CREATE----
 // Create Post
@@ -56,7 +57,15 @@ router.get('/userposts/:user_id', async (req, res) => {
 // ----Update----
     // Add Vote
     // Add 1 to column where postId == postId provided
+router.put('/addvote', async (req, res) => {
+    let wasSuccess = false;
 
+    const { poll_id, isOptionOne } = req.body;
+
+    wasSuccess = await pollQueries.addVote(poll_id, isOptionOne)
+
+    res.json({success : wasSuccess});
+});
 
 // ----Delete----
 // Delete Post

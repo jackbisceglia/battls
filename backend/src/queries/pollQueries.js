@@ -32,7 +32,7 @@ const getPolls = async (num) => {
 const getPopular = async () => {
     try {
         const popularPolls = await pool.query(
-            "SELECT * FROM polls ORDER BY option_one_votes + option_two_votes desc limit 5;"
+            "SELECT * FROM polls ORDER BY option_one_votes + option_two_votes desc limit 5"
         );
 
         return popularPolls.rows;
@@ -57,5 +57,25 @@ const getUserPosts = async (user_id) => {
     }
 }
 
+// add vote to a post
+const addVote = async (poll_id, isOptionOne) => {
+    try {
+        const voteAdded = isOptionOne
+            ? 
+                await pool.query(
+                    "UPDATE polls SET option_one_votes = option_one_votes + 1 WHERE poll_id = $1", [poll_id]
+                )
+            :
+                await pool.query(
+                    "UPDATE polls SET option_two_votes = option_two_votes + 1 WHERE poll_id = $1", [poll_id]
+                );     
 
-module.exports = { createPoll, getPolls, getPopular, getUserPosts };
+            return true;
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+module.exports = { createPoll, getPolls, getPopular, getUserPosts, addVote };
