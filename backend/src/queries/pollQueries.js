@@ -35,12 +35,27 @@ const getPopular = async () => {
             "SELECT * FROM polls ORDER BY option_one_votes + option_two_votes desc limit 5;"
         );
 
-        return popularPolls.rows
+        return popularPolls.rows;
     } 
     catch (error) {
         console.log(error.message);    
     }
 }
 
+// fetch all of one user's polls
+const getUserPosts = async (user_id) => {
+    try {
+        const usersPosts = await pool.query(
+            "SELECT * FROM polls WHERE usr_id = $1 ORDER BY num",
+                [user_id]
+        );
 
-module.exports = { createPoll, getPolls, getPopular };
+        return usersPosts.rows;
+    } 
+    catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+module.exports = { createPoll, getPolls, getPopular, getUserPosts };

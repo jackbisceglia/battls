@@ -44,12 +44,18 @@ router.get('/getpopular', async (req, res) => {
 
 // Get All User's Posts
     // Get all where DB's userId == REQ's userId
+router.get('/userposts/:user_id', async (req, res) => {
+    const { user_id } = req.params;
+
+    const allPosts = await pollQueries.getUserPosts(user_id)
+
+    res.json(allPosts)
+});
     
     
-    
-    // ----Update----
+// ----Update----
     // Add Vote
-// Add 1 to column where postId == postId provided
+    // Add 1 to column where postId == postId provided
 
 
 // ----Delete----
