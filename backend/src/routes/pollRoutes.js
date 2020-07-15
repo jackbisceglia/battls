@@ -7,7 +7,7 @@ const { response } = require("express");
 
 // ----CREATE----
 // Create Post
-router.post('/makepost', async (req, res) => {
+router.post('/makepoll', async (req, res) => {
     userExists = userQueries.userExists(req.body.user_id);
     
     if (userExists) {
@@ -45,21 +45,18 @@ router.get('/getpopular', async (req, res) => {
 
 // Get All User's Posts
     // Get all where DB's userId == REQ's userId
-router.get('/userposts/:user_id', async (req, res) => {
+router.get('/userpolls/:user_id', async (req, res) => {
     const { user_id } = req.params;
 
-    const allPosts = await pollQueries.getUserPosts(user_id)
+    const allPosts = await pollQueries.getUserPolls(user_id)
 
     res.json(allPosts)
 });
     
     
 // ----Update----
-    // Add Vote
-    // Add 1 to column where postId == postId provided
 router.put('/addvote', async (req, res) => {
     let wasSuccess = false;
-
     const { poll_id, isOptionOne } = req.body;
 
     wasSuccess = await pollQueries.addVote(poll_id, isOptionOne)
@@ -70,7 +67,14 @@ router.put('/addvote', async (req, res) => {
 // ----Delete----
 // Delete Post
 // DELETE post where postId == postId provided
+router.delete('/deletepoll/:poll_id', async(req, res) => {
+    let wasSuccess = false;
+    const { poll_id } = req.params;
 
+    wasSuccess = await pollQueries.deletePoll(poll_id);
+
+    res.json({success : wasSuccess})
+});
 
 // (LATER) Get Popular Posts (could replace most popular)
 // Get Most Voted posted in last 12 hours

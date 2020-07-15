@@ -43,7 +43,7 @@ const getPopular = async () => {
 }
 
 // fetch all of one user's polls
-const getUserPosts = async (user_id) => {
+const getUserPolls = async (user_id) => {
     try {
         const usersPosts = await pool.query(
             "SELECT * FROM polls WHERE usr_id = $1 ORDER BY num",
@@ -77,5 +77,21 @@ const addVote = async (poll_id, isOptionOne) => {
     }
 }
 
+// remove poll
+const deletePoll = async (poll_id) => {
+    try {
+        const remove = await pool.query(
+            "DELETE FROM polls WHERE poll_id = $1",
+                [poll_id]
+        );
 
-module.exports = { createPoll, getPolls, getPopular, getUserPosts, addVote };
+        return true
+    }
+    catch (error) {
+        console.log(error.message);    
+    }
+
+}
+
+
+module.exports = { createPoll, getPolls, getPopular, getUserPolls, addVote, deletePoll };
