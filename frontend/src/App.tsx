@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 // Semantic-UI Imports
-import { Grid } from 'semantic-ui-react'
+import { Grid, Button } from 'semantic-ui-react'
 
 // Component Imports
 import Navbar from './Components/Navbar'
@@ -31,8 +31,11 @@ const App: React.FC = () => {
     <Grid.Column float="left" computer={1} mobile={1}>
         <MakePoll placeholder={10}/>
       </Grid.Column>
-      <Grid.Column computer={5} mobile={12}>
+      <Grid.Column textAlign="center" computer={5} mobile={12} >
         <Feed pollList={polls}/>
+        <Button secondary size="mini">
+            <Button.Content>Load More</Button.Content>  
+        </Button>
       </Grid.Column>
     </Grid>
   </div>

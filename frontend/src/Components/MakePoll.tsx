@@ -9,6 +9,7 @@ import { Grid, Button, Modal, Form, Select} from 'semantic-ui-react'
 import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from '../Reducers'
 import { addPost } from '../Reducers/Slices/Posts'
+import sendNewPost from '../Reducers/Slices/Posts'
 
 
 // Interface Imports
@@ -25,6 +26,7 @@ const MakePoll: React.FC<Props> = () => {
 
     const postDefault = {
         id : uuidv4(),
+        userid: '000',
         optionOne: '',
         optionTwo: '',
         posterName: 'Jack Bisceglia',
@@ -54,6 +56,9 @@ const MakePoll: React.FC<Props> = () => {
         }
         else {
             dispatch(addPost(newPost));
+            // dispatch(sendNewPost(newPost)).then(() => {
+            //     // do additional work
+            //   })
             reset();
         }
     }

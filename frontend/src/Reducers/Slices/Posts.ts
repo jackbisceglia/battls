@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { PollData } from '../../Interfaces/PollData'
 import { RootState } from '..'; 
 
 const defaultPosts = [
     {
         id : '0000',
+        userid : '000',
         optionOne: "Bulls",
         optionTwo: "Celtics",
         posterName: "Jack Bisceglia",
@@ -17,6 +18,7 @@ const defaultPosts = [
       },
       {
         id : '0001',
+        userid : '000',
         optionOne: "String Cheese",
         optionTwo: "Melted Cheese",
         posterName: "Gillian Bisceglia",
@@ -29,6 +31,7 @@ const defaultPosts = [
       },
       {
         id : '0002',
+        userid : '000',
         optionOne: "Sausage",
         optionTwo: "Hot Dog",
         posterName: "Tom Brady",
@@ -41,6 +44,7 @@ const defaultPosts = [
       },
       {
         id : '0003',
+        userid : '000',
         optionOne: "Golden Retriever",
         optionTwo: "Black Lab",
         posterName: "Harry Potter",
@@ -58,6 +62,25 @@ interface vote {
   id: string
 }
 
+// export const sendNewPost = createAsyncThunk('posts/sendNewPost', async (postData) => {
+//   const url = '/polls/makepoll';
+  
+//   const res = await fetch(url, { method: 'POST', body: JSON.stringify(postData) }) // or whatever this syntax is
+//     .then(res => {
+//       return res.json()
+//     })
+
+//   return res.data as PollData;
+// });
+
+// export const getFeed = createAsyncThunk(
+//   'posts/sendNewPost', 
+//   async (num : number) => {
+//     const res = await fetch('/polls/getfeed/1')
+//       .then(res => res.json())
+
+//     console.log(res)
+// });
 
 const initialState: PollData[] = defaultPosts;
 
@@ -85,12 +108,20 @@ const postsSlice = createSlice({
           curr.userVoted.isOptionOne = action.payload.isOptionOne
         }
       })
+    },
+    setArr(state, action: PayloadAction<PollData[]>){
+      return action.payload
     }
-    
   }
-})
+  // extraReducers: builder => {
+  //   builder.addCase(sendNewPost.fulfilled, (state, action) => { 
+  //     state.push(action.payload)
+  //   })
+  // }
+});
 
-export const { addPost, addVote, userVoted } = postsSlice.actions
+export const { addPost, addVote, userVoted, setArr } = postsSlice.actions
+
 
 export default postsSlice.reducer
 

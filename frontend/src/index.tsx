@@ -6,13 +6,20 @@ import 'semantic-ui-css/semantic.min.css'
 
 // Store
 import { configureStore } from "@reduxjs/toolkit";
-import {Provider} from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
+import { setArr } from './Reducers/Slices/Posts'
+
 import rootReducer from './Reducers'
+
+const dispatch = useDispatch();
 
 const store = configureStore({
   reducer: rootReducer
 });
 
+
+// DISPATCH INITIAL STATE
+// dispatch()
 
 ReactDOM.render(
   <React.StrictMode>
