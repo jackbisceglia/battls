@@ -33,8 +33,8 @@ router.post('/makepoll', async (req, res) => {
     userExists = userQueries.userExists(req.body.user_id);
 
     if (userExists) {
-        await pollQueries.createPoll(req)
-        res.json({success : true})
+        const ret = await modifyQueryResult(await pollQueries.createPoll(req));
+        res.json(ret)
     }
 
     else {

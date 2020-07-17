@@ -12,11 +12,16 @@ const userExists = async (user_id) => {
 }
 
 const getUserName = async (user_id) => {
-    const username = await pool.query(
-        "SELECT username FROM users WHERE usr_id = $1",
-            [user_id]
-    );
-    return username.rows[0].username;
+    try {
+        const username = await pool.query(
+            "SELECT username FROM users WHERE usr_id = $1",
+                [user_id]
+        );
+        return username.rows[0].username;  
+    }
+    catch (error) {
+        console.log(error.message);    
+    }
 }
 
 

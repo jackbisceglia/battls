@@ -1,14 +1,17 @@
 const pool = require('../db');
+const { v4: uuidv4 } = require('uuid');
 
 // insert poll into table
 const createPoll = async (req) => {
 
-    const {user_id, poll_id, option_one, option_two} = req.body;
+    const {user_id, option_one, option_two} = req.body;
 
     const newPoll = await pool.query(
-        "INSERT INTO polls (usr_id, poll_id, option_one, option_two) VALUES ($1, $2, $3, $4)",
-            [user_id, poll_id, option_one, option_two]
+        "INSERT INTO polls (usr_id, poll_id, option_one, option_two) VALUES ($1, $2, $3, $4) RETURNING *",
+            [user_id, uuidv4(), option_one, option_two]
     );
+
+    return newPoll.rows[0];
 }
 
 // fetch all polls
