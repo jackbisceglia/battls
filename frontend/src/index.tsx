@@ -11,7 +11,6 @@ import { setArr } from './Reducers/Slices/Posts'
 
 import rootReducer from './Reducers'
 
-const dispatch = useDispatch();
 
 const store = configureStore({
   reducer: rootReducer
