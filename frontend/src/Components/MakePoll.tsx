@@ -8,7 +8,7 @@ import { Grid, Button, Modal, Form, Select} from 'semantic-ui-react'
 // Redux Imports
 import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from '../Reducers'
-import { addPost } from '../Reducers/Slices/Posts'
+import { createPost } from '../Reducers/Slices/Posts'
 import sendNewPost from '../Reducers/Slices/Posts'
 
 
@@ -55,10 +55,7 @@ const MakePoll: React.FC<Props> = () => {
             handleAlert("Both Option Fields Must be filled out");
         }
         else {
-            dispatch(addPost(newPost));
-            // dispatch(sendNewPost(newPost)).then(() => {
-            //     // do additional work
-            //   })
+            dispatch(createPost(newPost));
             reset();
         }
     }

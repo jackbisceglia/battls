@@ -4,25 +4,29 @@ const { v4: uuidv4 } = require('uuid');
 // insert poll into table
 const createPoll = async (req) => {
 
-    const {user_id, option_one, option_two} = req.body;
+    const {userid, optionOne, optionTwo} = req.body;
 
     const newPoll = await pool.query(
         "INSERT INTO polls (usr_id, poll_id, option_one, option_two) VALUES ($1, $2, $3, $4) RETURNING *",
-            [user_id, uuidv4(), option_one, option_two]
+            [userid, uuidv4(), optionOne, optionTwo]
     );
 
     return newPoll.rows[0];
 }
 
 // fetch all polls
-const getPolls = async (num) => {
+const getPolls = async (lastIndex) => {
     try {   
-        fetchStart = (num * 10) - 10;
-
-        const newPoll = await pool.query(
-            "SELECT * FROM polls WHERE num > $1 ORDER BY num LIMIT 10;",
-                [fetchStart]
-        );
+        const newPoll = lastIndex == 0
+            ?
+            await pool.query(
+                "SELECT * FROM polls ORDER BY num desc LIMIT 10"
+            )
+            : 
+            await pool.query(
+                "SELECT * FROM polls WHERE num < $1 ORDER BY num desc LIMIT 10",
+                    [lastIndex]
+            );
 
         return newPoll.rows;
     } 

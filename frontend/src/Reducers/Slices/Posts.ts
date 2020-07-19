@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { PollData } from '../../Interfaces/PollData'
+import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from '..'; 
 
 const defaultPosts = [
@@ -62,66 +63,96 @@ interface vote {
   id: string
 }
 
-// export const sendNewPost = createAsyncThunk('posts/sendNewPost', async (postData) => {
-//   const url = '/polls/makepoll';
+interface init {
+  feed: PollData[],
+  lastIndex: number,
+  loading: boolean
+}
+
+// GET FEED
+const getFeed = createAsyncThunk('posts/getFeed', async (lastIndex: number) => {
+  const url = `/polls/getfeed/${lastIndex}`;
   
-//   const res = await fetch(url, { method: 'POST', body: JSON.stringify(postData) }) // or whatever this syntax is
-//     .then(res => {
-//       return res.json()
-//     })
+  const res = await fetch(url)
+    .then(res => res.json());
 
-//   return res.data as PollData;
-// });
+  return res;
+});
 
-// export const getFeed = createAsyncThunk(
-//   'posts/sendNewPost', 
-//   async (num : number) => {
-//     const res = await fetch('/polls/getfeed/1')
-//       .then(res => res.json())
+// ADD NEW POST
+const createPost = createAsyncThunk('posts/createPost', async (post: PollData) => {
+  const url = '/polls/makepoll';
 
-//     console.log(res)
-// });
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  })
+    .then(res => res.json())
+  return res.newPost as PollData;
+})
 
-const initialState: PollData[] = defaultPosts;
+
+const initialState: init = {
+  feed: [],
+  lastIndex: 0,
+  loading: true
+};
 
 const postsSlice = createSlice({
   name: 'posts',
   initialState: initialState,
   reducers: {
-    addPost(state, action: PayloadAction<PollData>) {
-        return[action.payload, ...state];
-    },
     deletePost(state, action: PayloadAction<string>) {
-        return state.filter(curr => curr.id !== action.payload);
+      return {...state, feed: state.feed.filter(curr => curr.id !== action.payload)}
     },
     addVote(state, action: PayloadAction<vote>){
-      state.forEach(curr => {
+      state.feed.forEach(curr => {
         if (curr.id == action.payload.id){
           action.payload.isOptionOne ? curr.optionOneVotes += 1 : curr.optionTwoVotes += 1
         }
       })
     },
     userVoted(state, action: PayloadAction<vote>){
-      state.forEach(curr => {
+      state.feed.forEach(curr => {
         if (curr.id == action.payload.id){
           curr.userVoted.voted = true;
           curr.userVoted.isOptionOne = action.payload.isOptionOne
         }
       })
     },
-    setArr(state, action: PayloadAction<PollData[]>){
-      return action.payload
-    }
+  },
+  extraReducers: builder => {
+    builder
+    .addCase(getFeed.fulfilled, (state, action) => { 
+      return {
+        lastIndex: action.payload.nextNum,
+        feed: [...state.feed, ...action.payload.feed],
+        loading: false
+      }
+    })
+    .addCase(getFeed.pending, (state, action) => {
+      state.loading = true;
+    })
+    .addCase(createPost.fulfilled, (state, action) => {
+      return {
+        lastIndex: state.lastIndex,
+        feed: [action.payload, ...state.feed],
+        loading: false
+      }
+    })
+    .addCase(createPost.pending, (state, action) => {
+      state.loading = true;
+    })
   }
-  // extraReducers: builder => {
-  //   builder.addCase(sendNewPost.fulfilled, (state, action) => { 
-  //     state.push(action.payload)
-  //   })
-  // }
 });
 
-export const { addPost, addVote, userVoted, setArr } = postsSlice.actions
+export const { addVote, userVoted } = postsSlice.actions
 
+export { getFeed, createPost };
 
 export default postsSlice.reducer
 

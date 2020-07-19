@@ -1,5 +1,5 @@
 // React Imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Semantic-UI Imports
 import { Grid, Button } from 'semantic-ui-react'
@@ -17,28 +17,49 @@ import { PollData } from './Interfaces/PollData'
 // Redux Import
 import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from './Reducers'
-import { addPost } from './Reducers/Slices/Posts'
+// import { addPost } from './Reducers/Slices/Posts'
+import { getFeed } from './Reducers/Slices/Posts';
+
+
 
 const App: React.FC = () => {
-  const polls = useSelector((state: RootState) => state.posts);
-  const postDispatch = { addPost };
+  useEffect(() => {
+    dispatch(getFeed(0));
+  }, [])
+
+  const polls = useSelector((state: RootState) => state.posts.feed);
+  const currLastItem = useSelector((state: RootState) => state.posts.lastIndex); 
+  console.log(currLastItem)
+  const isLoading = useSelector((state: RootState) => state.posts.loading);
+  const dispatch = useDispatch();
+
+  const addToPage = (num : number) => {
+    dispatch(getFeed(num));
+  }
 
   return (
   <>
   <Navbar />
-  <div className="app">
-    <Grid fluid centered stackable>
-    <Grid.Column float="left" computer={1} mobile={1}>
-        <MakePoll placeholder={10}/>
-      </Grid.Column>
-      <Grid.Column textAlign="center" computer={5} mobile={12} >
-        <Feed pollList={polls}/>
-        <Button secondary size="mini">
-            <Button.Content>Load More</Button.Content>  
-        </Button>
-      </Grid.Column>
-    </Grid>
-  </div>
+  {
+    !isLoading
+      ?
+      <div className="app">
+      <Grid fluid centered stackable>
+      <Grid.Column float="left" computer={1} mobile={1}>
+          <MakePoll placeholder={10}/>
+        </Grid.Column>
+        <Grid.Column textAlign="center" computer={5} mobile={12} >
+          <Feed pollList={polls}/>
+          <Button secondary size="mini" onClick={(event) => addToPage(currLastItem)}>
+              <Button.Content>Load More</Button.Content>  
+          </Button>
+        </Grid.Column>
+      </Grid>
+    </div>
+    :
+    <h1>LOADING</h1>
+  }
+
   </>
   );
 }

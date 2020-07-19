@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './Styles/main.css'
@@ -7,10 +7,9 @@ import 'semantic-ui-css/semantic.min.css'
 // Store
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider, useDispatch } from 'react-redux';
-import { setArr } from './Reducers/Slices/Posts'
+import { getFeed } from './Reducers/Slices/Posts';
 
 import rootReducer from './Reducers'
-
 
 const store = configureStore({
   reducer: rootReducer
@@ -18,7 +17,6 @@ const store = configureStore({
 
 
 // DISPATCH INITIAL STATE
-// dispatch()
 
 ReactDOM.render(
   <React.StrictMode>

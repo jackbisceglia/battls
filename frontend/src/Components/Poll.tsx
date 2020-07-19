@@ -30,6 +30,7 @@ const getPercent = (votes: number, totalVotes: number) => {
 const Poll: React.FC<Props> = ({
     PollData
 }) => {
+    console.log(PollData);
     const polls = useSelector((state: RootState) => state.posts);
     const dispatch = useDispatch();
 
@@ -40,15 +41,19 @@ const Poll: React.FC<Props> = ({
 
     const totalVotes: number = PollData.optionOneVotes + PollData.optionTwoVotes;
 
+    // *REMINDER -> FIX WITH NEW STATE AND ADD TO VOTE BUTTONS
     const sendVote = (optionOne: boolean) => {
         const toSend = {
             isOptionOne: optionOne,
             id: PollData.id
         }
         dispatch(addVote(toSend));
-        dispatch(userVoted(toSend))
+        dispatch(userVoted(toSend));
+
+
     }
 
+    // *REMINDER -> FIX WITH NEW STATE AND ADD TO VOTE COLORS
     const getColor = (isOptionOne: boolean) => {
         if (!PollData.userVoted.voted){
             return 'blue';
@@ -62,6 +67,9 @@ const Poll: React.FC<Props> = ({
             }
         }
     }
+
+    // *REMINDER -> ADD TO BUTTONS
+    // 
 
     return (
         <Card centered fluid>
@@ -77,14 +85,14 @@ const Poll: React.FC<Props> = ({
             </Card.Content>
             <Card.Content textAlign="center" extra>
                 <Button.Group style={{width: '80%', margin: '.25rem'}} size="small">
-                    <Button animated="fade" size="mini" className="vote-btn" color={getColor(true)} disabled={PollData.userVoted.voted ? true : false} style={{fontSize: '.9rem'}} onClick={() => sendVote(true)}>
+                    <Button animated="fade" size="mini" className="vote-btn" disabled={PollData.userVoted.voted} color={getColor(true)} style={{fontSize: '.9rem'}} onClick={() => sendVote(true)}>
                         <Button.Content className="button-text" visible>{optionOne}</Button.Content>
                         <Button.Content hidden >
                             <Icon name='angle double up' />
                         </Button.Content>
                     </Button>
                     <Button.Or />
-                    <Button animated="fade" size="mini" className="vote-btn" color={getColor(false)} disabled={PollData.userVoted.voted} style={{fontSize: '.9rem'}} onClick={() => sendVote(false)}>
+                    <Button animated="fade" size="mini" className="vote-btn" disabled={PollData.userVoted.voted} color={getColor(false)} style={{fontSize: '.9rem'}} onClick={() => sendVote(false)}>
                         <Button.Content className="button-text" visible >{optionTwo}</Button.Content>
                         <Button.Content hidden >
                             <Icon name='angle double up' />

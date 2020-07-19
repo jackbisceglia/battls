@@ -22,6 +22,7 @@ const Feed: React.FC<Props> = ({
 }) => {
     return (
         <>
+        <button onClick={() => console.log(pollList[0])}>see state</button>
         {
         pollList.map(curr => (
             <Grid.Row key={curr.id} centered stretched style={{marginBottom: '2.5rem'}} >

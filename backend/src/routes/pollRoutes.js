@@ -34,39 +34,53 @@ router.post('/makepoll', async (req, res) => {
 
     if (userExists) {
         const ret = await modifyQueryResult(await pollQueries.createPoll(req));
-        res.json(ret)
+        console.log(ret)
+        res.json({
+            newPost: ret
+        })
     }
 
     else {
-        res.json({success : false})
+        res.json({newPost : {}})
     }
 });
 
 // ----READ----
 // Get Feed
-router.get('/getFeed/:num', async (req, res) => {
-        const { num } = req.params;
-        polls = await pollQueries.getPolls(num);
-        
-        const feed = [];
-        for(let i = 0; i < polls.length; i ++){
-            const insert = await modifyQueryResult(polls[i]);
-            feed.push(insert);
-        }
+router.get('/getfeed/:num', async (req, res) => {
+    const { num } = req.params;
 
-        res.json({
-            feed : feed,
-            previous: parseInt(num) - 1,
-            nextNum : parseInt(num) + 1
-        });
+    const polls = await pollQueries.getPolls(num);
+
+    const nextIndex = polls[polls.length - 1].num;
+
+    const feed = [];
+    for(let i = 0; i < polls.length; i ++){
+        const insert = await modifyQueryResult(polls[i]);
+        feed.push(insert);
+    }
+
+    console.log({
+        feed : feed,
+        nextNum : nextIndex
+    })
+    res.json({
+        feed : feed,
+        nextNum : nextIndex
+    });
 
 });
 
 // Get Most Voted Posts
 router.get('/getpopular', async (req, res) => {
     popular = await pollQueries.getPopular();
+    const feed = [];
 
-    res.json(popular);
+    for(let i = 0; i < popular.length; i ++){
+        const insert = await modifyQueryResult(popular[i]);
+        feed.push(insert);
+    }
+    res.json(feed);
 
 });
 
