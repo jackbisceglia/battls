@@ -20,14 +20,15 @@ interface Props {
 const Feed: React.FC<Props> = ({
     pollList
 }) => {
+
     return (
         <>
         <button onClick={() => console.log(pollList[0])}>see state</button>
         {
-        pollList.map(curr => (
+        pollList.map((curr, index) => (
             <Grid.Row key={curr.id} centered stretched style={{marginBottom: '2.5rem'}} >
                 <Grid.Column >
-                    <Poll PollData={curr}/>
+                    <Poll focusTo={index === (pollList.length - 1)} PollData={curr}/>
                 </Grid.Column>
             </Grid.Row>
         ))

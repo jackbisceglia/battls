@@ -25,16 +25,16 @@ import { getFeed } from './Reducers/Slices/Posts';
 const App: React.FC = () => {
   useEffect(() => {
     dispatch(getFeed(0));
+    setIsLoading(false)
   }, [])
 
   const polls = useSelector((state: RootState) => state.posts.feed);
   const currLastItem = useSelector((state: RootState) => state.posts.lastIndex); 
-  console.log(currLastItem)
-  const isLoading = useSelector((state: RootState) => state.posts.loading);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
   const addToPage = (num : number) => {
-    dispatch(getFeed(num));
+    dispatch(getFeed(num))
   }
 
   return (
@@ -50,7 +50,7 @@ const App: React.FC = () => {
         </Grid.Column>
         <Grid.Column textAlign="center" computer={5} mobile={12} >
           <Feed pollList={polls}/>
-          <Button secondary size="mini" onClick={(event) => addToPage(currLastItem)}>
+          <Button disabled={currLastItem == - 1}secondary size="mini" onClick={(event) => addToPage(currLastItem)}>
               <Button.Content>Load More</Button.Content>  
           </Button>
         </Grid.Column>

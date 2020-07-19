@@ -71,12 +71,19 @@ interface init {
 
 // GET FEED
 const getFeed = createAsyncThunk('posts/getFeed', async (lastIndex: number) => {
-  const url = `/polls/getfeed/${lastIndex}`;
+  if (lastIndex === -1) {
+    return {feed: [], nextNum: -1}
+  }
+  else{
+    const url = `/polls/getfeed/${lastIndex}`;
   
-  const res = await fetch(url)
-    .then(res => res.json());
+    const res = await fetch(url)
+      .then(res => res.json());
+  
+    return res;
+  }
+  
 
-  return res;
 });
 
 // ADD NEW POST
@@ -128,11 +135,17 @@ const postsSlice = createSlice({
   extraReducers: builder => {
     builder
     .addCase(getFeed.fulfilled, (state, action) => { 
-      return {
-        lastIndex: action.payload.nextNum,
-        feed: [...state.feed, ...action.payload.feed],
-        loading: false
+      if (action.payload.feed.length == 1) {
+        return state;
       }
+      else{
+        return {
+          lastIndex: action.payload.nextNum,
+          feed: [...state.feed, ...action.payload.feed],
+          loading: false
+        }  
+      }
+      
     })
     .addCase(getFeed.pending, (state, action) => {
       state.loading = true;

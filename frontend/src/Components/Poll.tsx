@@ -1,5 +1,5 @@
 // React Imports
-import React from 'react'
+import React, {useEffect } from 'react'
 
 // Component Imports
 import PollOption from './PollOption'
@@ -19,7 +19,8 @@ import { RootState } from '../Reducers'
 import { addVote, userVoted } from '../Reducers/Slices/Posts'
   
 interface Props {
-    PollData: PollData
+    PollData: PollData,
+    focusTo: boolean
 }
 
 const getPercent = (votes: number, totalVotes: number) => {
@@ -28,11 +29,12 @@ const getPercent = (votes: number, totalVotes: number) => {
 }
 
 const Poll: React.FC<Props> = ({
-    PollData
+    PollData,
+    focusTo,
 }) => {
-    console.log(PollData);
     const polls = useSelector((state: RootState) => state.posts);
     const dispatch = useDispatch();
+    
 
     // Deconstruct pollOptions
     let optionOne: string = PollData.optionOne;
@@ -70,6 +72,7 @@ const Poll: React.FC<Props> = ({
 
     // *REMINDER -> ADD TO BUTTONS
     // 
+
 
     return (
         <Card centered fluid>

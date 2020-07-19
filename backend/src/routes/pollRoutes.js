@@ -49,26 +49,32 @@ router.post('/makepoll', async (req, res) => {
 // Get Feed
 router.get('/getfeed/:num', async (req, res) => {
     const { num } = req.params;
-
+    const lastI = await pollQueries.getFirstIndex()
     const polls = await pollQueries.getPolls(num);
 
-    const nextIndex = polls[polls.length - 1].num;
-
-    const feed = [];
-    for(let i = 0; i < polls.length; i ++){
-        const insert = await modifyQueryResult(polls[i]);
-        feed.push(insert);
+    if (lastI == num){
+        res.json({
+            feed : [],
+            nextNum : -1
+        });
+        return
     }
+    else {
+        const lastUsed = polls[polls.length - 1].num;
 
-    console.log({
-        feed : feed,
-        nextNum : nextIndex
-    })
-    res.json({
-        feed : feed,
-        nextNum : nextIndex
-    });
+        const nextIndex = lastUsed == lastI ? -1 : lastUsed;
 
+        const feed = [];
+        for(let i = 0; i < polls.length; i ++){
+            const insert = await modifyQueryResult(polls[i]);
+            feed.push(insert);
+        }
+    
+        res.json({
+            feed : feed,
+            nextNum : nextIndex
+        });    
+    }
 });
 
 // Get Most Voted Posts
