@@ -74,16 +74,12 @@ const getFeed = createAsyncThunk('posts/getFeed', async (lastIndex: number) => {
   if (lastIndex === -1) {
     return {feed: [], nextNum: -1}
   }
-  else{
+  else {
     const url = `/polls/getfeed/${lastIndex}`;
   
-    const res = await fetch(url)
+    return await fetch(url)
       .then(res => res.json());
-  
-    return res;
   }
-  
-
 });
 
 // ADD NEW POST
@@ -102,6 +98,22 @@ const createPost = createAsyncThunk('posts/createPost', async (post: PollData) =
   return res.newPost as PollData;
 })
 
+
+// ADD VOTE
+const addVoteToServer = createAsyncThunk('posts/addVote', async (info: vote) => {
+  const url = '/polls/addvote';
+
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(info)
+  })
+    .then(res => res.json())
+  return info as vote;
+})
 
 const initialState: init = {
   feed: [],
@@ -135,17 +147,12 @@ const postsSlice = createSlice({
   extraReducers: builder => {
     builder
     .addCase(getFeed.fulfilled, (state, action) => { 
-      if (action.payload.feed.length == 1) {
-        return state;
+      console.log(action.payload.feed);
+      return {
+        lastIndex: action.payload.nextNum,
+        feed: [...state.feed, ...action.payload.feed],
+        loading: false
       }
-      else{
-        return {
-          lastIndex: action.payload.nextNum,
-          feed: [...state.feed, ...action.payload.feed],
-          loading: false
-        }  
-      }
-      
     })
     .addCase(getFeed.pending, (state, action) => {
       state.loading = true;
@@ -160,12 +167,27 @@ const postsSlice = createSlice({
     .addCase(createPost.pending, (state, action) => {
       state.loading = true;
     })
+    .addCase(addVoteToServer.fulfilled, (state, action) => {
+
+      state.feed.forEach(curr => {
+        if (curr.id == action.payload.id){
+          action.payload.isOptionOne ? curr.optionOneVotes += 1 : curr.optionTwoVotes += 1;
+          curr.userVoted.voted = true;
+          curr.userVoted.isOptionOne = action.payload.isOptionOne;
+        }
+      })
+
+      state.loading = false
+    })
+    .addCase(addVoteToServer.pending, (state, action) => {
+      state.loading = true
+    })
   }
 });
 
 export const { addVote, userVoted } = postsSlice.actions
 
-export { getFeed, createPost };
+export { getFeed, createPost, addVoteToServer };
 
 export default postsSlice.reducer
 

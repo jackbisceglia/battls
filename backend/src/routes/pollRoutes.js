@@ -11,7 +11,7 @@ const modifyQueryResult = async (qRes) => {
     const username = await userQueries.getUserName(usr_id);
     
     // **** Add userVoted middleware!
-
+    const { hasVoted, isOptionOneVote } = await pollQueries.hasUserVoted(poll_id, usr_id);
     return {
         id : poll_id,
         userid : usr_id,
@@ -21,8 +21,8 @@ const modifyQueryResult = async (qRes) => {
         optionOneVotes : option_one_votes,
         optionTwoVotes : option_two_votes,
         userVoted : {
-            voted : false,
-            isOptionOne : false
+            voted : hasVoted,
+            isOptionOne : isOptionOneVote
         }
     }   
 } 
@@ -105,10 +105,10 @@ router.get('/userpolls/:user_id', async (req, res) => {
 // ----Update----
 router.put('/addvote', async (req, res) => {
     let wasSuccess = false;
-    const { poll_id, isOptionOne } = req.body;
+    const { id, isOptionOne } = req.body;
 
-    wasSuccess = await pollQueries.addVote(poll_id, isOptionOne)
-
+    wasSuccess = await pollQueries.addVote(id, isOptionOne)
+    wasSuccess ? console.log("VOTE ADDED") : console.log("UNSUCCESSFUL")
     res.json({success : wasSuccess});
 });
 

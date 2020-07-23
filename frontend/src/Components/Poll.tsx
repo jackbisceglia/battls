@@ -16,11 +16,10 @@ import '../Styles/polls.css'
 // Redux Imports
 import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from '../Reducers'
-import { addVote, userVoted } from '../Reducers/Slices/Posts'
+import { addVoteToServer } from '../Reducers/Slices/Posts'
   
 interface Props {
-    PollData: PollData,
-    focusTo: boolean
+    PollData: PollData
 }
 
 const getPercent = (votes: number, totalVotes: number) => {
@@ -30,9 +29,7 @@ const getPercent = (votes: number, totalVotes: number) => {
 
 const Poll: React.FC<Props> = ({
     PollData,
-    focusTo,
 }) => {
-    const polls = useSelector((state: RootState) => state.posts);
     const dispatch = useDispatch();
     
 
@@ -49,10 +46,7 @@ const Poll: React.FC<Props> = ({
             isOptionOne: optionOne,
             id: PollData.id
         }
-        dispatch(addVote(toSend));
-        dispatch(userVoted(toSend));
-
-
+        dispatch(addVoteToServer(toSend));
     }
 
     // *REMINDER -> FIX WITH NEW STATE AND ADD TO VOTE COLORS

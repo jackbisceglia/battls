@@ -24,7 +24,7 @@ import { getFeed } from './Reducers/Slices/Posts';
 
 const App: React.FC = () => {
   useEffect(() => {
-    dispatch(getFeed(0));
+    dispatch(getFeed(0))
     setIsLoading(false)
   }, [])
 
@@ -33,9 +33,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
-  const addToPage = (num : number) => {
-    dispatch(getFeed(num))
-  }
+
 
   return (
   <>
@@ -44,20 +42,17 @@ const App: React.FC = () => {
     !isLoading
       ?
       <div className="app">
-      <Grid fluid centered stackable>
-      <Grid.Column float="left" computer={1} mobile={1}>
-          <MakePoll placeholder={10}/>
-        </Grid.Column>
-        <Grid.Column textAlign="center" computer={5} mobile={12} >
-          <Feed pollList={polls}/>
-          <Button disabled={currLastItem == - 1}secondary size="mini" onClick={(event) => addToPage(currLastItem)}>
-              <Button.Content>Load More</Button.Content>  
-          </Button>
-        </Grid.Column>
-      </Grid>
-    </div>
+        <Grid fluid centered stackable>
+          <Grid.Column float="left" computer={1} mobile={1}>
+            <MakePoll placeholder={10}/>
+          </Grid.Column>
+          <Grid.Column textAlign="center" computer={5} mobile={12} >
+            <Feed pollList={polls}/>
+          </Grid.Column>
+        </Grid>
+      </div>
     :
-    <h1>LOADING</h1>
+    <h1 style={{fontSize: '10rem'}}>LOADING</h1>
   }
 
   </>

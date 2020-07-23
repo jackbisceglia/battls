@@ -22,6 +22,7 @@ interface Props {
 
 const MakePoll: React.FC<Props> = () => {
     const polls = useSelector((state: RootState) => state.posts);
+    const isLoading = useSelector((state: RootState) => state.posts.loading);
     const dispatch = useDispatch();
 
     const postDefault = {
@@ -39,7 +40,7 @@ const MakePoll: React.FC<Props> = () => {
     }
 
     const [makePostClicked, setMakePostClicked] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
     const [newPost, setNewPost] = useState<PollData>(postDefault);
     const [createError, setCreateError] = useState<string>('');
 
@@ -84,6 +85,7 @@ const MakePoll: React.FC<Props> = () => {
             </Button>
         </Grid.Row>
         <Modal 
+        loading={isLoading}
             open={makePostClicked}
             onClose={() => {
                 setMakePostClicked(false);

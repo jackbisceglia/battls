@@ -2,13 +2,16 @@
 import React from 'react'
 
 // Semantic UI Imports
-import { Grid } from 'semantic-ui-react'
+import { Button, Grid } from 'semantic-ui-react'
 
 // Component Imports
 import Poll from './Poll'
 
 // Interface Imports
 import { PollData } from '../Interfaces/PollData'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../Reducers'
+import { getFeed } from '../Reducers/Slices/Posts'
 
 // Redux Imports
 
@@ -20,19 +23,29 @@ interface Props {
 const Feed: React.FC<Props> = ({
     pollList
 }) => {
+    const dispatch = useDispatch()
+    const currLastItem = useSelector((state: RootState) => state.posts.lastIndex); 
+    const feedLoading = useSelector((state: RootState) => state.posts.loading); 
+    const addToPage = (num : number) => {
+        const scrollTop = document.documentElement.scrollTop;
+        dispatch(getFeed(num));
+      }
 
     return (
         <>
-        <button onClick={() => console.log(pollList[0])}>see state</button>
         {
         pollList.map((curr, index) => (
             <Grid.Row key={curr.id} centered stretched style={{marginBottom: '2.5rem'}} >
                 <Grid.Column >
-                    <Poll focusTo={index === (pollList.length - 1)} PollData={curr}/>
+                    <Poll  PollData={curr}/>
                 </Grid.Column>
             </Grid.Row>
         ))
         }
+        <Button disabled={currLastItem == - 1} loading={feedLoading} secondary size="mini" onClick={(event) => addToPage(currLastItem)}>
+              <Button.Content>{currLastItem == - 1 ? "All Polls Loaded" : "Load More"}</Button.Content>  
+        </Button>
+        {/* <div onClick={(event) => addToPage(currLastItem)}>Load More</div> */}
         </>
     );
 }

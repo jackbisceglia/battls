@@ -1,6 +1,35 @@
 const pool = require('../db');
 const { v4: uuidv4 } = require('uuid');
 
+const hasUserVoted = async (pollId, userId) => {
+    try {
+        const vote = await pool.query(
+            "SELECT usr_id, isoptionone FROM votes WHERE poll_id = $1 AND usr_id = $2",
+                [pollId, userId]
+        );
+
+        if (vote.rows.length == 1) {
+            console.log("INSIDE IF")
+            return {
+                hasVoted : true,
+                isOptionOneVote : vote.rows[0].isoptionone
+            };
+    
+        }
+        else {
+            return {
+                hasVoted : false,
+                isOptionOneVote : false
+            }; 
+        }
+
+    } 
+
+    catch (error) {
+        console.log(error.message);
+    }
+}
+
 // get first row's index
 const getFirstIndex = async () => {
     try {
@@ -115,4 +144,4 @@ const deletePoll = async (poll_id) => {
 }
 
 
-module.exports = { createPoll, getPolls, getPopular, getUserPolls, addVote, deletePoll, getFirstIndex };
+module.exports = { createPoll, getPolls, getPopular, getUserPolls, addVote, deletePoll, getFirstIndex, hasUserVoted };

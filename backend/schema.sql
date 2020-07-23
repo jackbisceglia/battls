@@ -14,3 +14,9 @@ CREATE TABLE users (
     email VARCHAR (255) NOT NULL,
     pass VARCHAR(255)
 );
+
+CREATE TABLE votes (
+    usr_id VARCHAR(255) NOT NULL,
+    poll_id VARCHAR(255) NOT NULL,
+    isOptionOne boolean NOT NULL
+);
