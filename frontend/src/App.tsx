@@ -39,23 +39,16 @@ const App: React.FC = () => {
   <>
   <Navbar />
   {console.log(polls)}
-  {
-    !isLoading
-      ?
-      <div className="app">
-        <Grid fluid centered stackable>
-          <Grid.Column float="left" computer={1} mobile={1}>
-            <MakePoll placeholder={10}/>
-          </Grid.Column>
-          <Grid.Column textAlign="center" computer={5} mobile={12} >
-            <Feed pollList={polls}/>
-          </Grid.Column>
-        </Grid>
-      </div>
-    :
-    <h1 style={{fontSize: '10rem'}}>LOADING</h1>
-  }
-
+    <div className="app">
+      <Grid fluid centered stackable>
+        <Grid.Column float="left" computer={1} mobile={1}>
+          <MakePoll placeholder={10}/>
+        </Grid.Column>
+        <Grid.Column textAlign="center" computer={5} mobile={12} >
+          <Feed pollList={polls}/>
+        </Grid.Column>
+      </Grid>
+    </div>
   </>
   );
 }

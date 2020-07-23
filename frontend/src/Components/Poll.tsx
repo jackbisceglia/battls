@@ -76,8 +76,8 @@ const Poll: React.FC<Props> = ({
             </Card.Content>
             <Card.Content textAlign="center">
                 <div className="pollCntr">
-                    <PollOption optionName={optionOne} percent={getPercent(PollData.optionOneVotes, totalVotes)} isWinning={getPercent(PollData.optionOneVotes, totalVotes) >= 50 ? true : false} />
-                    <PollOption optionName={optionTwo} percent={getPercent(PollData.optionTwoVotes, totalVotes)} isWinning={getPercent(PollData.optionTwoVotes, totalVotes) >= 50 ? true : false}/>
+                    <PollOption showPercent={PollData.userVoted.voted} optionName={optionOne} percent={getPercent(PollData.optionOneVotes, totalVotes)} isWinning={getPercent(PollData.optionOneVotes, totalVotes) >= 50 ? true : false} />
+                    <PollOption showPercent={PollData.userVoted.voted} optionName={optionTwo} percent={getPercent(PollData.optionTwoVotes, totalVotes)} isWinning={getPercent(PollData.optionTwoVotes, totalVotes) >= 50 ? true : false}/>
                 </div>
             </Card.Content>
             <Card.Content textAlign="center" extra>

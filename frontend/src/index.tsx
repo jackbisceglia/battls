@@ -15,9 +15,6 @@ const store = configureStore({
   reducer: rootReducer
 });
 
-
-// DISPATCH INITIAL STATE
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

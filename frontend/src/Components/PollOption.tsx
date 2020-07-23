@@ -9,16 +9,24 @@ import { Progress } from 'semantic-ui-react'
 interface Props {
     optionName: string
     percent: number
-    isWinning: boolean
+    isWinning: boolean,
+    showPercent: boolean
 }
-
+// label={`${optionName} (${Math.round(percent)}%)`}
 const PollOption: React.FC<Props> = ({
         optionName,
         percent,
-        isWinning
+        isWinning,
+        showPercent
 }) => {
+    const percentToShow = (p: number) => {
+        return <p style={{fontSize: '10px'}}>{Math.round(p)}</p>
+    }
+
     return (
+        <>
         <Progress className="p-bar" percent={percent} label={optionName} success={isWinning} error={!isWinning} size="small"/>
+        </>
     )
 }
 
