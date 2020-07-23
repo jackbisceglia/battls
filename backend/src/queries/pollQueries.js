@@ -128,6 +128,20 @@ const addVote = async (poll_id, isOptionOne) => {
     }
 }
 
+const addToVotesTable = async (userId, pollId, isOptionOne) => {
+    try {
+        const newVote = await pool.query(
+            "INSERT INTO votes (usr_id, poll_id, isoptionone) VALUES ($1, $2, $3) RETURNING *",
+                [userId, pollId, isOptionOne]
+            );
+        console.log(newVote.rows[0]);
+        return true;        
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+}
+
 // remove poll
 const deletePoll = async (poll_id) => {
     try {
@@ -144,4 +158,14 @@ const deletePoll = async (poll_id) => {
 }
 
 
-module.exports = { createPoll, getPolls, getPopular, getUserPolls, addVote, deletePoll, getFirstIndex, hasUserVoted };
+module.exports = { 
+    createPoll,
+    getPolls, 
+    getPopular,
+    getUserPolls,
+    addVote,
+    deletePoll,
+    getFirstIndex, 
+    hasUserVoted,
+    addToVotesTable 
+};

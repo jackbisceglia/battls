@@ -104,12 +104,22 @@ router.get('/userpolls/:user_id', async (req, res) => {
     
 // ----Update----
 router.put('/addvote', async (req, res) => {
-    let wasSuccess = false;
-    const { id, isOptionOne } = req.body;
+    const { poll_id, user_id, isOptionOne } = req.body;
 
-    wasSuccess = await pollQueries.addVote(id, isOptionOne)
-    wasSuccess ? console.log("VOTE ADDED") : console.log("UNSUCCESSFUL")
-    res.json({success : wasSuccess});
+    const voteAdded = await pollQueries.addToVotesTable(user_id, poll_id, isOptionOne)
+
+    if (voteAdded){
+        const voteCtUpdated = await pollQueries.addVote(poll_id, isOptionOne);
+        
+        if (voteCtUpdated){
+            res.json({success : true});
+        }
+    }
+
+
+    else{
+        res.json({success : false});
+    }
 });
 
 // ----Delete----

@@ -38,6 +38,7 @@ const App: React.FC = () => {
   return (
   <>
   <Navbar />
+  {console.log(polls)}
   {
     !isLoading
       ?

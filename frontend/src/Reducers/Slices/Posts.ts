@@ -103,13 +103,20 @@ const createPost = createAsyncThunk('posts/createPost', async (post: PollData) =
 const addVoteToServer = createAsyncThunk('posts/addVote', async (info: vote) => {
   const url = '/polls/addvote';
 
+  // **Modify
+  const send = {
+    poll_id: info.id,
+    user_id: '000',
+    isOptionOne: info.isOptionOne
+  };
+
   const res = await fetch(url, {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(info)
+    body: JSON.stringify(send)
   })
     .then(res => res.json())
   return info as vote;
