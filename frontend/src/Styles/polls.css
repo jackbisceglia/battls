@@ -14,3 +14,13 @@
     font-weight: 400;
 }
 
+.votes-title {
+    font-weight: 500;
+}
+
+.title-percent {
+    font-size: .6rem;
+    font-weight: 500;
+    margin-left: .15rem;
+    margin-right: .25rem;
+}

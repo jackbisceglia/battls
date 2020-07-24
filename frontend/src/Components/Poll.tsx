@@ -22,6 +22,7 @@ interface Props {
     PollData: PollData
 }
 
+
 const getPercent = (votes: number, totalVotes: number) => {
     return (votes / totalVotes) * 100
 
@@ -63,6 +64,8 @@ const Poll: React.FC<Props> = ({
             }
         }
     }
+    
+    const oneIsWinning = getPercent(PollData.optionOneVotes, totalVotes) >= 50 ? true : false;
 
     // *REMINDER -> ADD TO BUTTONS
     // 
@@ -71,31 +74,46 @@ const Poll: React.FC<Props> = ({
     return (
         <Card centered fluid>
             <Card.Content >
-                <Card.Header>{optionOne} vs. {optionTwo}</Card.Header>
+                <Card.Header>
+                    {/* IF USER HAS VOTED, DISPLAY PERCENTAGES NEXT TO NAMES */}
+                    {PollData.userVoted.voted 
+                        ?
+                            <p className="votes-title">{optionOne}<span className="title-percent" style={oneIsWinning ? {color: 'green'} : {color: 'red'}}>{Math.floor(getPercent(PollData.optionOneVotes, totalVotes))}%</span> vs. {optionTwo}<span className="title-percent" style={oneIsWinning ? {color: 'red'} : {color: 'green'}} >{Math.floor(getPercent(PollData.optionTwoVotes, totalVotes))}%</span> </p>
+                        :
+                            <p className="votes-title">{optionOne} vs. {optionTwo}</p>
+                    }
+                    </Card.Header>
                 <Card.Meta>{poster}</Card.Meta>
             </Card.Content>
             <Card.Content textAlign="center">
                 <div className="pollCntr">
-                    <PollOption showPercent={PollData.userVoted.voted} optionName={optionOne} percent={getPercent(PollData.optionOneVotes, totalVotes)} isWinning={getPercent(PollData.optionOneVotes, totalVotes) >= 50 ? true : false} />
-                    <PollOption showPercent={PollData.userVoted.voted} optionName={optionTwo} percent={getPercent(PollData.optionTwoVotes, totalVotes)} isWinning={getPercent(PollData.optionTwoVotes, totalVotes) >= 50 ? true : false}/>
+                    <PollOption showPercent={PollData.userVoted.voted} optionName={optionOne} percent={getPercent(PollData.optionOneVotes, totalVotes)} isWinning={oneIsWinning} />
+                    <PollOption showPercent={PollData.userVoted.voted} optionName={optionTwo} percent={getPercent(PollData.optionTwoVotes, totalVotes)} isWinning={!oneIsWinning}/>
                 </div>
             </Card.Content>
             <Card.Content textAlign="center" extra>
-                <Button.Group style={{width: '80%', margin: '.25rem'}} size="small">
-                    <Button animated="fade" size="mini" className="vote-btn" disabled={PollData.userVoted.voted} color={getColor(true)} style={{fontSize: '.9rem'}} onClick={() => sendVote(true)}>
-                        <Button.Content className="button-text" visible>{optionOne}</Button.Content>
-                        <Button.Content hidden >
-                            <Icon name='angle double up' />
-                        </Button.Content>
-                    </Button>
-                    <Button.Or />
-                    <Button animated="fade" size="mini" className="vote-btn" disabled={PollData.userVoted.voted} color={getColor(false)} style={{fontSize: '.9rem'}} onClick={() => sendVote(false)}>
-                        <Button.Content className="button-text" visible >{optionTwo}</Button.Content>
-                        <Button.Content hidden >
-                            <Icon name='angle double up' />
-                        </Button.Content>
-                    </Button>
-                </Button.Group>
+                { !PollData.userVoted.voted
+                    ?
+                    <Button.Group style={{width: '80%', margin: '.25rem'}} size="small">
+                        <Button animated="fade" size="mini" className="vote-btn" disabled={PollData.userVoted.voted} color={getColor(true)} style={{fontSize: '.9rem'}} onClick={() => sendVote(true)}>
+                            <Button.Content className="button-text" visible>{optionOne}</Button.Content>
+                            <Button.Content hidden >
+                                <Icon name='angle double up' />
+                            </Button.Content>
+                        </Button>
+                        <Button.Or />
+                        <Button animated="fade" size="mini" className="vote-btn" disabled={PollData.userVoted.voted} color={getColor(false)} style={{fontSize: '.9rem'}} onClick={() => sendVote(false)}>
+                            <Button.Content className="button-text" visible >{optionTwo}</Button.Content>
+                            <Button.Content hidden >
+                                <Icon name='angle double up' />
+                            </Button.Content>
+                        </Button>
+                    </Button.Group>
+                    :
+                    <Button size="mini" disabled>Vote Submitted</Button>
+
+                }
+
             </Card.Content>
         </Card>
 
