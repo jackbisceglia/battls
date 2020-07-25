@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Button } from 'semantic-ui-react'
 
 // Component Imports
+import LandingMain from './LandingPage/LandingMain'
 import Navbar from './Components/Navbar'
 import Feed from './Components/Feed'
 import MakePoll from './Components/MakePoll'
@@ -21,6 +22,14 @@ import { RootState } from './Reducers'
 import { getFeed } from './Reducers/Slices/Posts';
 
 
+// -- TODO --
+// Create Landing Page
+// Login/Signup functionality
+// Add Auth State
+//  - isAuthed
+//  - userId
+// Popular Posts
+// Watch/Favorite List
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -36,21 +45,24 @@ const App: React.FC = () => {
 
 
   return (
-  <>
-  <Navbar />
-  {console.log(polls)}
-    <div className="app">
-      <Grid fluid centered stackable>
-        <Grid.Column float="left" computer={1} mobile={1}>
-          <MakePoll placeholder={10}/>
-        </Grid.Column>
-        <Grid.Column textAlign="center" computer={5} mobile={12} >
-          <Feed pollList={polls}/>
-        </Grid.Column>
-      </Grid>
-    </div>
-  </>
+    <LandingMain />
   );
 }
 
 export default App;
+
+// Main App
+// <>
+// <Navbar />
+// {console.log(polls)}
+//   <div className="app">
+//     <Grid fluid centered stackable>
+//       <Grid.Column float="left" computer={1} mobile={1}>
+//         <MakePoll placeholder={10}/>
+//       </Grid.Column>
+//       <Grid.Column textAlign="center" computer={5} mobile={12} >
+//         <Feed pollList={polls}/>
+//       </Grid.Column>
+//     </Grid>
+//   </div>
+// </>
