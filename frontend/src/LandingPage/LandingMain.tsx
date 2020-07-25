@@ -9,8 +9,8 @@ const LandingMain: React.FC = () => {
     return (
         <div className="main">
             <Grid fluid centered stackable>
-                <Grid.Row columns={1}>
-                    <Grid.Column stretched textAlign="center" computer={16} mobile={12} >
+                <Grid.Row>
+                    <Grid.Column stretched textAlign="center" largeScreen={16} computer={16} mobile={12} >
                         <FormBox />
                     </Grid.Column>
                 </Grid.Row>
