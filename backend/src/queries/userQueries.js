@@ -1,4 +1,5 @@
 const pool = require('../db');
+const { v4: uuidv4 } = require('uuid');
 
 // user exists in db
 const userExists = async (user_id) => {
@@ -24,5 +25,22 @@ const getUserName = async (user_id) => {
     }
 }
 
+const createUser = async ({ username, email, password }) => {
+    try {
+        const insert = await pool.query(
+            "INSERT INTO users (usr_id, username, email, pass) VALUES ($1, $2, $3, crypt($4, gen_salt('bf', 8))) returning *",
+                [uuidv4(), username, email, password]
+        )
 
-module.exports = { userExists, getUserName };
+        return insert.rows.length === 1;
+    } 
+    catch (error) {
+        error.message();
+    }
+}
+
+module.exports = { 
+    userExists,
+    getUserName, 
+    createUser
+};

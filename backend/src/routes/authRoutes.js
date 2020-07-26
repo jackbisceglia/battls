@@ -1,9 +1,17 @@
+const express = require( "express" );
+const router = express.Router();
+const pool = require('../db');
+const userQueries = require('../queries/userQueries');
+
+
 // Sign Up (Create user)
-    // Authenticate Username, Email, and Pass (Might delegate to frontend)
-    // Add to DB if all 3 are valid
-    // Create userId w/ UUID
-    // Return userId
-    // Potentially create session/cookie
+// Return userId
+// Potentially create session/cookie
+router.post('/signup', async (req, res) => {
+    const success = await userQueries.createUser(req.body);
+
+    res.json(success);
+})
 
 // Login (Authenticate)
     // Authenticate (Username || Email) && Password
@@ -15,3 +23,5 @@
 
 // Signout (Delete session)
     // Destroy session
+
+module.exports = router;

@@ -20,3 +20,5 @@ CREATE TABLE votes (
     poll_id VARCHAR(255) NOT NULL,
     isOptionOne boolean NOT NULL
 );
+
+create extension pgcrypto;
