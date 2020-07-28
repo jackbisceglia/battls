@@ -22,10 +22,9 @@ const authRoutes = require('./routes/authRoutes');
 // ROUTER USE
 app.get( "/", ( req, res ) => {
     res.send( "Hello world!" );
-} );
+});
 
 app.use('/polls', pollRoutes);
-
 app.use('/auth', authRoutes);
 
 

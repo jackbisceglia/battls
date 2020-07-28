@@ -23,7 +23,6 @@ import { getFeed } from './Reducers/Slices/Posts';
 
 
 // -- TODO --
-// Create Landing Page
 // Login/Signup functionality
 // Add Auth State
 //  - isAuthed

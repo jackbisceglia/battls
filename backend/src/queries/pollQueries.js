@@ -9,7 +9,6 @@ const hasUserVoted = async (pollId, userId) => {
         );
 
         if (vote.rows.length == 1) {
-            console.log("INSIDE IF")
             return {
                 hasVoted : true,
                 isOptionOneVote : vote.rows[0].isoptionone

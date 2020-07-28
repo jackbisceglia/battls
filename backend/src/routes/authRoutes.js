@@ -5,7 +5,9 @@ const userQueries = require('../queries/userQueries');
 
 
 // Sign Up (Create user)
-// Return userId
+// **Modify
+// * Make sure credentials dont exist already (username(not case sensitive), and email) *
+// * Return userId for state *
 // Potentially create session/cookie
 router.post('/signup', async (req, res) => {
     const success = await userQueries.createUser(req.body);
@@ -16,6 +18,11 @@ router.post('/signup', async (req, res) => {
 // Login (Authenticate)
     // Authenticate (Username || Email) && Password
     // Potentially create session/cookie
+router.post('/login', async (req, res) => {
+    const {username, email, password} = req.body;
+    const returned = await userQueries.authenticate(req.body);
+    res.json(returned);
+})
 
 // Is Active (Check for active session) (Later)
     // Check if req cookie matches session cookie
