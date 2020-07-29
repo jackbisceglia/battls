@@ -29,17 +29,15 @@ import { getFeed } from './Reducers/Slices/Posts';
 // Watch/Favorite List
 
 const App: React.FC = () => {
+  const polls = useSelector((state: RootState) => state.posts.feed);
+  const dispatch = useDispatch();
+  const currLastItem = useSelector((state: RootState) => state.posts.lastIndex); 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     dispatch(getFeed(0))
     setIsLoading(false)
   }, [])
-
-  const polls = useSelector((state: RootState) => state.posts.feed);
-  const currLastItem = useSelector((state: RootState) => state.posts.lastIndex); 
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
-
-
 
   return (
     <>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Router, Switch} from 'react-router-dom';
 import LandingMain from './LandingPage/LandingMain'
 import App from './App'
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from './Reducers';
 
 // -- TODO --
 // Make Protected Route based on login
@@ -10,24 +12,10 @@ import App from './App'
 
 // Main Routing Component
 const Routing: React.FC = () => {
-    const [isMain, setIsMain] = useState(true)
+    const auth = useSelector((state: RootState) => state.auth);
+    const dispatch = useDispatch();
 
-
-    return (
-        <BrowserRouter>
-            <Switch>
-                <Route path="/">
-                    <LandingMain />
-                </Route>
-
-                {/* Turn into protected route */}
-                {/* Add nested route for account page eventually */}
-                <Route path="/home">
-                    <App />
-                </Route>
-            </Switch>
-        </BrowserRouter>
-    );
+    return (auth.authorized ? <App /> : < LandingMain/>)
   }
   
   export default Routing;
