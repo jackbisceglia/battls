@@ -15,16 +15,15 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: initial,
   reducers: {
-    setAuth(state, action: PayloadAction<string>) {
-        state.id = action.payload;
-        state.authorized = true;
-        console.log(state.id, state.authorized);
+    updateAuth(state, action: PayloadAction<stateType>) {
+        state.id = action.payload.id;
+        state.authorized = action.payload.authorized;
     },
   },
 });
 
 // Actions
-export const {setAuth} = authSlice.actions
+export const {updateAuth} = authSlice.actions
 
 // Thunks
 // export {};

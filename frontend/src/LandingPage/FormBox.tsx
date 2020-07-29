@@ -7,7 +7,7 @@ import '../Styles/landingStyles.css';
 // Redux
 import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from '../Reducers'
-import { setAuth } from '../Reducers/Slices/Auth';
+import { updateAuth } from '../Reducers/Slices/Auth';
 import { withRouter } from 'react-router-dom';
 
 const FormBox: React.FC = () => {
@@ -25,12 +25,18 @@ const FormBox: React.FC = () => {
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(setAuth('000'))
+        dispatch(updateAuth({
+            id: '000',
+            authorized: true
+        }));
     }
 
     const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(setAuth('000'))
+        dispatch(updateAuth({
+            id: '001',
+            authorized: true
+        }));
     }
 
     return (

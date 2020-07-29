@@ -6,7 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './Reducers';
 
 // -- TODO --
-// Make Protected Route based on login
+// Local State && Sessions for persistence
+// Add Dropdown to navbar
+    // Signout
+    // Account Page
+        // Create Account Page to change name/password/ses stats
 // Popular Posts
 // Watch/Favorite List
 
