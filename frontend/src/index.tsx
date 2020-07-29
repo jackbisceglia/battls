@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Route from './Route';
+import Routing from './Routing';
 import './Styles/main.css'
 import 'semantic-ui-css/semantic.min.css'
 
@@ -19,7 +19,7 @@ const store = configureStore({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Route />      
+      <Routing />      
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

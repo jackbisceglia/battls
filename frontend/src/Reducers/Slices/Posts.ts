@@ -3,61 +3,6 @@ import { PollData } from '../../Interfaces/PollData'
 import { useSelector, useDispatch} from 'react-redux'
 import { RootState } from '..'; 
 
-const defaultPosts = [
-    {
-        id : '0000',
-        userid : '000',
-        optionOne: "Bulls",
-        optionTwo: "Celtics",
-        posterName: "Jack Bisceglia",
-        optionOneVotes: 27,
-        optionTwoVotes: 90,
-        userVoted: {
-          voted: false,
-          isOptionOne: false
-        }
-      },
-      {
-        id : '0001',
-        userid : '000',
-        optionOne: "String Cheese",
-        optionTwo: "Melted Cheese",
-        posterName: "Gillian Bisceglia",
-        optionOneVotes: 9,
-        optionTwoVotes: 2,
-        userVoted: {
-          voted: false,
-          isOptionOne: false
-        }
-      },
-      {
-        id : '0002',
-        userid : '000',
-        optionOne: "Sausage",
-        optionTwo: "Hot Dog",
-        posterName: "Tom Brady",
-        optionOneVotes: 47,
-        optionTwoVotes: 42,
-        userVoted: {
-          voted: false,
-          isOptionOne: false
-        }
-      },
-      {
-        id : '0003',
-        userid : '000',
-        optionOne: "Golden Retriever",
-        optionTwo: "Black Lab",
-        posterName: "Harry Potter",
-        optionOneVotes: 71,
-        optionTwoVotes: 43,
-        userVoted: {
-          voted: false,
-          isOptionOne: false
-        }
-      }
-]
-
 interface vote {
   isOptionOne: boolean,
   id: string
