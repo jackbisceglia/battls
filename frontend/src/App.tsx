@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Button } from 'semantic-ui-react'
 
 // Component Imports
-import LandingMain from './LandingPage/LandingMain'
 import Navbar from './Components/Navbar'
 import Feed from './Components/Feed'
 import MakePoll from './Components/MakePoll'
@@ -23,7 +22,6 @@ import { getFeed } from './Reducers/Slices/Posts';
 
 
 // -- TODO --
-// Login/Signup functionality
 // Add Auth State
 //  - isAuthed
 //  - userId
@@ -44,24 +42,22 @@ const App: React.FC = () => {
 
 
   return (
-    <LandingMain />
+    <>
+    <Navbar />
+      <div className="app">
+        <Grid fluid centered stackable>
+          <Grid.Column float="left" computer={1} mobile={1}>
+            <MakePoll placeholder={10}/>
+          </Grid.Column>
+          <Grid.Column textAlign="center" computer={5} mobile={12} >
+            <Feed pollList={polls}/>
+          </Grid.Column>
+        </Grid>
+      </div>
+    </>
   );
 }
 
 export default App;
 
 // Main App
-// <>
-// <Navbar />
-// {console.log(polls)}
-//   <div className="app">
-//     <Grid fluid centered stackable>
-//       <Grid.Column float="left" computer={1} mobile={1}>
-//         <MakePoll placeholder={10}/>
-//       </Grid.Column>
-//       <Grid.Column textAlign="center" computer={5} mobile={12} >
-//         <Feed pollList={polls}/>
-//       </Grid.Column>
-//     </Grid>
-//   </div>
-// </>
