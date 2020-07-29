@@ -20,16 +20,9 @@ import { RootState } from './Reducers'
 // import { addPost } from './Reducers/Slices/Posts'
 import { getFeed } from './Reducers/Slices/Posts';
 
-
-// -- TODO --
-// Add Auth State
-//  - isAuthed
-//  - userId
-// Popular Posts
-// Watch/Favorite List
-
 const App: React.FC = () => {
   const polls = useSelector((state: RootState) => state.posts.feed);
+  const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const currLastItem = useSelector((state: RootState) => state.posts.lastIndex); 
   const [isLoading, setIsLoading] = useState(true);
@@ -46,6 +39,7 @@ const App: React.FC = () => {
         <Grid fluid centered stackable>
           <Grid.Column float="left" computer={1} mobile={1}>
             <MakePoll placeholder={10}/>
+            <button onClick={() => console.log(auth.id, auth.authorized)}>See State</button>
           </Grid.Column>
           <Grid.Column textAlign="center" computer={5} mobile={12} >
             <Feed pollList={polls}/>

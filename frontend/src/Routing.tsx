@@ -6,11 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './Reducers';
 
 // -- TODO --
+// State doesnt reset when signout occurs
 // Local State && Sessions for persistence
-// Add Dropdown to navbar
-    // Signout
-    // Account Page
-        // Create Account Page to change name/password/ses stats
 // Popular Posts
 // Watch/Favorite List
 
