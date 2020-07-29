@@ -1,7 +1,7 @@
 # battls
 A Web App designed to allow users to poll their friends on any topic
 
-Written in Typescript, React, Go, and PostgreSQL
+Written in Typescript, React, Node, Express, and PostgreSQL
 
 
 ### Comments
