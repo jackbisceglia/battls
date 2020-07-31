@@ -1,17 +1,14 @@
-# battls
-A Web App designed to allow users to poll their friends on any topic
+# Battls
+A social media web app built to allow users to debate on topics of their choice via simple, persuasive, and capable polls 
 
-Written in Typescript, React, Node, Express, and PostgreSQL
+## Description
+Battls is a full fledged social media web app. It is mobile friendly, and allows people to to vote on polls that interest them, as well as to post polls pitting any two topics against each other. The app supports a a feed filtering polls based on date, providing organic access to diverse poll topics. It also aims to soon showcase the most voted on polls of all time, as well as the most popular polls of the week. The app aims to settle debates without bias, based only on popular opinion.
 
+## Features
+* _Coming Soon_
 
-### Comments
-* **Modify signifies a change needed to be made in the future
+## Installation
+* _Coming Soon_
 
-
-### TODO
-* Make Landing Page
-* Create Sign Up Functionality
-* Create Login
-* Make backend Auth
-* Add user to app state
-* Create sessions/local storage
+## Live App
+* _Coming Soon_
