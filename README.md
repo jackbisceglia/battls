@@ -1,5 +1,5 @@
 
-<p align="center"><img width="200" src="https://dl.dropboxusercontent.com/s/06ktendvlyv88mv/Untitled.png?dl=0"></p>
+<p align="center"><img width="200" src="https://dl.dropboxusercontent.com/s/1sy3vp3dujz09pq/First.png?dl=0"></p>
 <h1 align="center">Battls</h1>
 <p align="center">A social media web app built to allow users to debate on topics of their choice via simple, persuasive, and capable polls</p>
 
